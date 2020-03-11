@@ -121,21 +121,25 @@ struct time
 {
  double hour;
  double min;
- bool isCorrect();
+ bool MINisCorrect();
+ bool HOURisCorrect();
 };
 
-bool time::isCorrect()
+bool time::MINisCorrect()
 {
     bool result = false;
-    if ((hour <= 24) && (hour >= 0)) {
-        result = true;
-    }
-    if ((min >= 0) && (min <= 60)){
-        result = true;
-    }
+	if ((min >= 0) && (min <= 60)) {
+		result = true;
+	}
     return result;
 }
-
+bool time::HOURisCorrect() {
+	bool result = false;
+	if ((hour <= 24) && (hour >= 0)) {
+		result = true;
+	}
+	return result;
+}
 struct train
 {
  int number;
@@ -157,16 +161,24 @@ void lvl2()
 
         do
         {
-            cout << "\nInput arrival time: ";
-            cin >> group[i].arrival.hour >> group[i].arrival.min;
-        } while (!group[i].arrival.isCorrect());
-
-        do
+            cout << "\nInput arrival time(hour): ";
+			cin >> group[i].arrival.hour;
+        } while (!group[i].arrival.HOURisCorrect());
+		do
+		{
+			cout << "\nInput arrival time(min): ";
+			cin >> group[i].arrival.min;
+		} while (!group[i].arrival.MINisCorrect());
+		do
         {
-            cout << "\nInput departure time: ";
-            cin >> group[i].departure.hour >> group[i].departure.min;
-        } while (!group[i].departure.isCorrect());
-
+            cout << "\nInput departure time(hour): ";
+			cin >> group[i].departure.hour;
+        } while (!group[i].departure.HOURisCorrect());
+		do
+		{
+			cout << "\nInput departure time(min): ";
+			cin>> group[i].departure.min;
+		} while (!group[i].departure.MINisCorrect());
         cout << "\nInput route:";
         cin >> group[i].route;
 
@@ -193,7 +205,7 @@ struct name
 struct NOTE2
 {
     name user;
-    int tele;
+    long tele;
     Date birthday;
 	bool isCorrect();
 };
@@ -246,23 +258,27 @@ void lvl3()
 			swap(BLOCK2[i].birthday.month, BLOCK2[i + 1].birthday.month);
 			swap(BLOCK2[i].birthday.year, BLOCK2[i + 1].birthday.year);
 		}
-
 	}
-
+	/*for (int i = 0; i < N; i++) {
+		cout << "FIO:" << BLOCK2[i].user.F << " " << BLOCK2[i].user.I << " " << BLOCK2[i].user.O << endl;
+		cout << "Telephon number:" << BLOCK2[i].tele << endl;
+		cout << "Birthdat:" << BLOCK2[i].birthday.day << "." << BLOCK2[i].birthday.month << "." << BLOCK2[i].birthday.year;
+	}*/
     char userf[56];
 	int k = 0;
     cout << "\nInput famil of user: ";
     cin >> userf;
     for (int i = 0; i < N; i++) {
-        if (userf == BLOCK2[i].user.F)
+		int a = strcmp(userf, BLOCK2[i].user.F);
+        if (a==0)
         {
             cout << "FIO:" << BLOCK2[i].user.F << " " << BLOCK2[i].user.I << " " << BLOCK2[i].user.O << endl;
             cout << "Telephon number:" << BLOCK2[i].tele << endl;
-            cout << "Birthdat:" << BLOCK2[i].birthday.day << "." << BLOCK2[i].birthday.month << "." << BLOCK2[i].birthday.year;
+            cout << "Birthdat:" << BLOCK2[i].birthday.day << "." << BLOCK2[i].birthday.month << "." << BLOCK2[i].birthday.year<<endl;
 			k += 1;
 		}
     }
-	if (k = 0)
+	if (k == 0)
 	{
 		cout << "No matches" << endl;
 	}
